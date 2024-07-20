@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automation ROI Calculator</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --background-color: #ecf0f1;
+            --text-color: #34495e;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .app-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        h1 {
+            color: var(--secondary-color);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        #results {
+            margin-top: 30px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+        #results h3 {
+            color: var(--secondary-color);
+            margin-top: 0;
+        }
+        .result-item {
+            margin-bottom: 10px;
+        }
+        .result-item span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <h1>Automation ROI Calculator</h1>
+        <div>
+            <label for="automationType">Type of Automated Process:</label>
+            <select id="automationType">
+                <option value="">Select process type</option>
+                <option value="client-onboarding">Client Onboarding</option>
+                <option value="client-success-management">Client Success Management</option>
+                <option value="call-qualification">Call Qualification</option>
+                <option value="internal-updates">Internal Updates and ClickUp Task Management</option>
+                <option value="sending-sops">Sending SOPs to Team Members</option>
+                <option value="client-acquisition">Client Acquisition</option>
+                <option value="client-fulfillment">Client Fulfillment</option>
+                <option value="client-retention">Client Retention and LTV</option>
+                <option value="client-referral">Client Referral Network and Communication</option>
+                <option value="personalized-assets">Creating Personalized Assets for Leads and Internal Team</option>
+                <option value="content-creation">Content Creation</option>
+                <option value="ad-creation">Ad Creation</option>
+                <option value="ad-copy-creation">Ad Copy Creation</option>
+                <option value="funnel-building">Funnel Building</option>
+                <option value="funnel-copywriting">Copywriting for the Funnel</option>
+                <option value="automated-outreach">Automated Outreach Systems</option>
+                <option value="automated-cold-dm">Automated Cold DM Systems</option>
+                <option value="automated-dm-setting">Automated DM Setting with DM Setters and VAs</option>
+                <option value="va-management">VA Management</option>
+                <option value="dm-setter-management">DM Setter Management</option>
+                <option value="youtube-content">YouTube Content Creation Process A-Z</option>
+                <option value="crm-automation">Automating CRM Management, Pipelines, and Workflows</option>
+                <option value="automating-invoicing">Automating Invoicing</option>
+                <option value="utm-tracking">Automated Tracking on UTM Sources from Website Clicks</option>
+                <option value="ad-tracking">Automating Tracking for Ads</option>
+                <option value="social-media-tracking">Automating Tracking for UTM Sources from Social Media Opt-ins</option>
+                <option value="lead-magnet-funnels">Automated Lead Magnet Based Funnels with Assets</option>
+                <option value="other">Other</option>
+            </select>
+        </div>
+        <div>
+            <label for="timeSaved">Time Saved Per Week (hours):</label>
+            <input type="number" id="timeSaved" value="9">
+        </div>
+        <div>
+            <label for="hourlyRate">Hourly Rate ($):</label>
+            <input type="number" id="hourlyRate" value="50">
+        </div>
+        <div>
+            <label for="implementationCost">Implementation Cost ($):</label>
+            <input type="number" id="implementationCost" value="15000">
+        </div>
+        <div>
+            <label for="maintenanceCost">Monthly Maintenance Cost ($):</label>
+            <input type="number" id="maintenanceCost" value="200">
+        </div>
+        <button onclick="calculateROI()">Calculate ROI</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        function calculateROI() {
+            const automationType = document.getElementById('automationType').value;
+            const timeSavedPerWeek = Number(document.getElementById('timeSaved').value);
+            const hourlyRate = Number(document.getElementById('hourlyRate').value);
+            const implementationCost = Number(document.getElementById('implementationCost').value);
+            const maintenanceCostPerMonth = Number(document.getElementById('maintenanceCost').value);
+
+            const weeklySavings = timeSavedPerWeek * hourlyRate;
+            const monthlySavings = weeklySavings * 4;
+            const annualSavings = weeklySavings * 52;
+            const annualMaintenanceCost = maintenanceCostPerMonth * 12;
+
+            const firstYearBenefit = annualSavings;
+            const firstYearCost = implementationCost + annualMaintenanceCost;
+            const firstYearNetBenefit = firstYearBenefit - firstYearCost;
+            const firstYearROI = (firstYearNetBenefit / firstYearCost) * 100;
+
+            const subsequentYearsNetBenefit = annualSavings - annualMaintenanceCost;
+            const subsequentYearsROI = (subsequentYearsNetBenefit / annualMaintenanceCost) * 100;
+
+            const fiveYearValue = (annualSavings * 5) - implementationCost - (annualMaintenanceCost * 5);
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.style.display = 'block';
+            resultsDiv.innerHTML = `
+                <h3>Results for ${automationType ? document.getElementById('automationType').options[document.getElementById('automationType').selectedIndex].text : 'selected process'}</h3>
+                <div class="result-item"><span>Weekly Savings:</span> $${weeklySavings.toFixed(2)}</div>
+                <div class="result-item"><span>Monthly Savings:</span> $${monthlySavings.toFixed(2)}</div>
+                <div class="result-item"><span>Annual Savings:</span> $${annualSavings.toFixed(2)}</div>
+                <div class="result-item"><span>First Year ROI:</span> ${firstYearROI.toFixed(2)}%</div>
+                <div class="result-item"><span>Subsequent Years ROI:</span> ${subsequentYearsROI.toFixed(2)}%</div>
+                <div class="result-item"><span>5-Year Value:</span> $${fiveYearValue.toFixed(2)}</div>
+            `;
+        }
+    </script>
+</body>
+</html>
